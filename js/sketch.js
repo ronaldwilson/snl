@@ -1,4 +1,4 @@
-// Daniel Shiffman
+// Original: Daniel Shiffman, Upgraded: Ronald Wilson
 // Snakes and Ladders
 
 // What is the state?
@@ -20,13 +20,13 @@ let averageRolls = 0;
 let avgP;
 
 function setup() {
-  createCanvas(400, 400);
+  createCanvas(600, 600);
   avgP = createP('');
 
   rolls[index] = 0;
 
   // Size of tile, columns and rows
-  let resolution = 40;
+  let resolution = 60;
   let cols = width / resolution;
   let rows = height / resolution;
 
@@ -66,12 +66,15 @@ function setup() {
 }
 
 function draw() {
-  frameRate(5);
+  frameRate(1);
   background(51);
 
   // Draw all the tiles, snakes, and ladders
   for (let tile of tiles) {
     tile.show();
+  }
+  for (let tile of tiles){
+    tile.showNumber();
   }
   for (let tile of tiles) {
     tile.showSnadders();
