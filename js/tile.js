@@ -74,19 +74,73 @@ class Tile {
       } else {
         this.drawLadder(myCenter[0],myCenter[1],nextCenter[0],nextCenter[1]);
       }
-
     }
   }
 
+  // Draw Snakes
   drawSnake(startX,startY,endX,endY){
     strokeWeight(12.0);
     strokeCap(ROUND);
     stroke(255, 0, 0, 200);
-    bezier(startX, startY, startY-10, startY-10, endY+10, endY+10, endX, endY);
+    bezier(startX, startY, startY-50, startY-50, endY+50, endY+50, endX, endY);
+    stroke('purple'); // Change the color
+    strokeWeight(5); // Make the points 10 pixels in size
+    point(startX, startY);
+    let angleDeg = Math.atan2(endY - startY, endX - startX) * 180 / Math.PI;
+    console.log(angleDeg);
   }
+
+  // Draw Ladders
   drawLadder(startX,startY,endX,endY){
-    stroke(0, 255, 0, 200);
+    let lineDist = 20;
+
+    stroke(54, 34, 4, 200);
     line(startX, startY, endX, endY);
-    line(startX-10, startY, endX-10, endY);
+    line(startX-lineDist, startY, endX-lineDist, endY);
+
+    // Find ladder steps
+    let maxV = (this.findLineLength(startX, startY, endX, endY)/20)-1;
+    // Strand distance
+    let d = 20;
+
+    for(let i=0; i<maxV; i++){
+      let npStart = this.findSlopPoints(startX, endX, startY, endY, d);
+      let npEnd = this.findSlopPoints(startX-lineDist, endX-lineDist, startY, endY, d);
+      line(npStart[0], npStart[1], npEnd[0], npEnd[1]);
+      d+=20;
+    }
   }
+
+  // Find slop points
+  findSlopPoints(startX, endX, startY, endY, d){
+
+    // Distance
+    if(startX <= endX){
+      d = Math.abs(d) * -1;
+    }
+
+    // Find Slope of the line
+    let slope = (endY-startY)/(endX-startX);
+    // Find angle of line
+    var theta = Math.atan(slope);
+    // the coordinates of the A3 Point
+    var Ax= endX + d * Math.cos(theta);
+    var Ay= endY + d * Math.sin(theta);
+
+    return [Ax, Ay];
+  }
+
+  // Find line length
+  findLineLength(startX, startY, endX, endY){
+
+    var xs = 0;
+    var ys = 0;
+    xs = endX - startX;
+    xs = xs * xs;
+    ys = endY - startY;
+    ys = ys * ys;
+
+    return Math.round(Math.sqrt( xs + ys ));
+  }
+
 }
