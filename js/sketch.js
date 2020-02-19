@@ -19,8 +19,24 @@ let index = 0;
 let averageRolls = 0;
 let avgP;
 
+function preload() {
+  soundFormats('wav');
+  soundMove     = loadSound('assets/click.wav');
+  soundClimb    = loadSound('assets/teleport_casual.wav');
+  soundSwallow  = loadSound('assets/beep_space.wav');
+}
+
 function setup() {
   createCanvas(600, 600);
+
+  let myDiv = createDiv('click to start audio');
+  myDiv.position(0, 0);
+
+  // Start the audio context on a click/touch event
+  userStartAudio().then(function() {
+     myDiv.remove();
+   });
+
   avgP = createP('');
 
   rolls[index] = 0;
@@ -66,8 +82,8 @@ function setup() {
 }
 
 function draw() {
-  frameRate(1);
-  background(51);
+    frameRate(1);
+//  background(51);
 
   // Draw all the tiles, snakes, and ladders
   for (let tile of tiles) {
@@ -84,18 +100,28 @@ function draw() {
   if (state === ROLL_STATE) {
     player.rollDie();
     rolls[index]++;
-    player.showPreview();
+    if(!player.isSnadder()){
+        player.showPreview();
+    }
     state = MOVE_STATE;
     // Moving the player
   } else if (state === MOVE_STATE) {
-    player.move();
     if (player.isSnadder()) {
       state = SNADDER_STATE;
     } else {
+      soundMove.setVolume(0.1);
+      soundMove.play();
+      player.move();
       state = ROLL_STATE;
     }
     // Moving along a Snake or Ladder
   } else if (state === SNADDER_STATE) {
+    soundClimb.setVolume(0.1);
+    if(player.isSnake()){
+      soundSwallow.play();
+    }else{
+      soundClimb.play();
+    }
     player.moveSnadder();
     state = ROLL_STATE;
   }

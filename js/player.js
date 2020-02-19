@@ -47,6 +47,15 @@ class Player {
     this.spot += tile.snadder;
   }
 
+  // Is snake
+  isSnake() {
+    let tile = tiles[this.spot];
+    if(tile.snadder < 0){
+      return 1;
+    }
+    return 0;
+  }
+
   // Display on the current tile
   show() {
     let current = tiles[this.spot];
