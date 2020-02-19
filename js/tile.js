@@ -81,13 +81,11 @@ class Tile {
   drawSnake(startX,startY,endX,endY){
     strokeWeight(12.0);
     strokeCap(ROUND);
-    stroke(255, 0, 0, 200);
+    stroke(255, 255, 255, 200);
     bezier(startX, startY, startY-50, startY-50, endY+50, endY+50, endX, endY);
     stroke('purple'); // Change the color
     strokeWeight(5); // Make the points 10 pixels in size
     point(startX, startY);
-    let angleDeg = Math.atan2(endY - startY, endX - startX) * 180 / Math.PI;
-    console.log(angleDeg);
   }
 
   // Draw Ladders
