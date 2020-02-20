@@ -21,9 +21,11 @@ let avgP;
 
 function preload() {
   soundFormats('wav');
+  soundBg       = loadSound('assets/slaking_bg.wav');
   soundMove     = loadSound('assets/click.wav');
   soundClimb    = loadSound('assets/teleport_casual.wav');
   soundSwallow  = loadSound('assets/beep_space.wav');
+  soundFinish   = loadSound('assets/power_up.wav');
 }
 
 function setup() {
@@ -31,6 +33,10 @@ function setup() {
 
   let myDiv = createDiv('click to start audio');
   myDiv.position(0, 0);
+
+  soundBg.setVolume(0.05);
+  soundBg.loop(); //loop
+  soundBg.play(); //play Bg
 
   // Start the audio context on a click/touch event
   userStartAudio().then(function() {
@@ -109,14 +115,14 @@ function draw() {
     if (player.isSnadder()) {
       state = SNADDER_STATE;
     } else {
-      soundMove.setVolume(0.1);
+      soundMove.setVolume(1.0);
       soundMove.play();
       player.move();
       state = ROLL_STATE;
     }
     // Moving along a Snake or Ladder
   } else if (state === SNADDER_STATE) {
-    soundClimb.setVolume(0.1);
+    soundClimb.setVolume(1.0);
     if(player.isSnake()){
       soundSwallow.play();
     }else{
@@ -131,6 +137,8 @@ function draw() {
 
   // Is the game over?
   if (player.spot >= tiles.length - 1) {
+    soundFinish.setVolume(1.0);
+    soundFinish.play();
     state = ROLL_STATE;
     player.reset();
     index++;
