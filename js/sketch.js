@@ -22,10 +22,10 @@ let avgP;
 function preload() {
   soundFormats('wav');
   soundBg       = loadSound('assets/slaking_bg.wav');
-  soundMove     = loadSound('assets/click.wav');
-  soundClimb    = loadSound('assets/teleport_casual.wav');
-  soundSwallow  = loadSound('assets/beep_space.wav');
-  soundFinish   = loadSound('assets/power_up.wav');
+  soundMove     = loadSound('assets/move.wav');
+  soundClimb    = loadSound('assets/climb.wav');
+  soundSwallow  = loadSound('assets/swallow.wav');
+  soundFinish   = loadSound('assets/gameOver.wav');
 }
 
 function setup() {
