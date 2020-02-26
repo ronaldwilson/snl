@@ -57,13 +57,23 @@ class Player {
   }
 
   // Display on the current tile
-  show() {
+  show(n) {
     let current = tiles[this.spot];
     // Just get out of here if it's not a valid tile
     if (!current) return;
-    fill(255);
+    if(n == 1){
+      fill('yellow');
+    }else{
+      fill('blue');
+    }
     stroke(0);
     let center = current.getCenter();
-    ellipse(center[0], center[1], 16);
+    ellipse(center[0], center[1], 25);
+    fill(0);
+    noStroke();
+    textSize(13);
+    textStyle(BOLD);
+    text(n, center[0]-3.5, center[1]+4);
+    stroke(0);
   }
 }
