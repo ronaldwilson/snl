@@ -97,8 +97,8 @@ function setup() {
 }
 
 function draw() {
+    background(0);
     frameRate(1);
-//  background(51);
 
   // Draw all the tiles, snakes, and ladders
   for (let tile of tiles) {
@@ -167,6 +167,7 @@ function draw() {
           player1.reset();
           index1++;
           rolls1[index1] = 0;
+          toss = 0;
         }
 
         if(player.roll === 1 || player.roll === 6 || player.isSnadder()){
@@ -230,6 +231,7 @@ function draw() {
           player.reset();
           index++;
           rolls[index] = 0;
+          toss = 0;
         }
 
        if(player1.roll === 1 || player1.roll === 6 || player1.isSnadder()){
